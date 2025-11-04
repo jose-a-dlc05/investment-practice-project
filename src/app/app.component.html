@@ -1,3 +1,3 @@
 <app-header />
-<app-user-input (add)="calculateInvestmentResults($event)" />
-<app-output-data [results]="annualData" />
+<app-user-input (add)="onCalculateInvestmentResults($event)" />
+<app-output-data [results]="resultsData()" />

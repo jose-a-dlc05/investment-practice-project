@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { HeaderComponent } from './header/header.component';
 import {
   InvestmentData,
@@ -22,9 +22,10 @@ export interface CalculatedInvestmentData {
   templateUrl: './app.component.html',
 })
 export class AppComponent {
-  annualData: CalculatedInvestmentData[] = [];
-  calculateInvestmentResults(investmentData: InvestmentData) {
+  resultsData = signal<CalculatedInvestmentData[] | undefined>(undefined);
+  onCalculateInvestmentResults(investmentData: InvestmentData) {
     let investmentValue = investmentData.initialInvestment;
+    const annualData = [];
 
     for (let i = 0; i < investmentData.duration; i++) {
       const year = i + 1;
@@ -35,7 +36,7 @@ export class AppComponent {
         investmentValue -
         investmentData.annualInvestment * year -
         investmentData.initialInvestment;
-      this.annualData.push({
+      annualData.push({
         year: year,
         interest: interestEarnedInYear,
         valueEndOfYear: investmentValue,
@@ -46,5 +47,7 @@ export class AppComponent {
           investmentData.annualInvestment * year,
       });
     }
+
+    this.resultsData.set(annualData);
   }
 }
