@@ -1,6 +1,6 @@
-import { Component, input, Input } from '@angular/core';
-import { CalculatedInvestmentData } from '../app.component';
+import { Component, inject } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
+import { InvestmentService } from '../investment.service';
 
 @Component({
   selector: 'app-output-data',
@@ -10,5 +10,9 @@ import { CurrencyPipe } from '@angular/common';
   styleUrl: './output-data.component.css',
 })
 export class OutputDataComponent {
-  results = input<CalculatedInvestmentData[]>();
+  resultsData = inject(InvestmentService);
+
+  get results() {
+    return this.resultsData.resultData;
+  }
 }
